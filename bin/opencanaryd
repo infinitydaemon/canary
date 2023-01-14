@@ -5,7 +5,7 @@ PIDFILE="${DIR}/opencanaryd.pid"
 cmd=$1
 
 function usage() {
-    echo -e "\n  OpenCanary\n"
+    echo -e "\n  CWD OpenCanary\n"
     echo -e "\topencanaryd [ --start | --dev | --stop | --restart | --copyconfig | --usermodule | --version | --help ]\n\n"
     echo -e "\t\t--start\tStarts the opencanaryd process"
     echo -e "\t\t--dev\tRun the opencanaryd process in the foreground"
