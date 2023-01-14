@@ -10,7 +10,7 @@ In essence, OpenCanary creates a network honeypot allowing you to catch hackers 
 Features
 ----------
 
-* Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place.
+* Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place. Google's Gmail has stopped accepting so called Less Secure Apps so that won't work. 
 
 Prerequisites
 ----------------
@@ -19,6 +19,7 @@ Prerequisites
 * SNMP requires the Python library scapy
 * RDP requires the Python library rdpy~ (this module has been removed; we are currently determining a way forward with this.)
 * [Optional] Samba module needs a working installation of samba
+* [Mandatory] SMTP server to recieve real-time email alerts or email-to-SMS (if supported by your Telecom operator)
 
 Installation Linux
 ------------------
