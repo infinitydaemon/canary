@@ -1,0 +1,5 @@
+requests
+paramiko
+PyMySQL
+gitpython
+pytest
