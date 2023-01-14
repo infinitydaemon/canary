@@ -31,7 +31,7 @@ $ sudo apt install samba # if you plan to use the smb module
 $ virtualenv env/
 $ . env/bin/activate
 $ pip install opencanary
-$ pip install scapy pcapy rdpy
+$ pip install scapy pcapy
 ```
 
 OpenCanary is started by running:
