@@ -2,8 +2,6 @@ OpenCanary on CWD Appliance
 ===========================
 CWD SYSTEMS & Thinkst Applied Research
 
-![opencanary logo](docs/logo.png)
-
 Overview
 ----------
 
