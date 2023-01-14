@@ -1,9 +1,9 @@
 "SMTP": {
                 "class": "logging.handlers.SMTPHandler",
-                "mailhost": ["authenticated.mail.server", 25],
+                "mailhost": ["mail.yourserver.com", 25],
                 "fromaddr": "canary@yourdomain.com",
-                "toaddrs" : ["youraddress@yourdomain.com"],
-                "subject" : "OpenCanary Alert",
-                "credentials" : ["myusername", "password1"],
+                "toaddrs" : ["toaddress@yourdomain.com"],
+                "subject" : "CWD OpenCanary Alert",
+                "credentials" : ["myUsername", "myPassword"],
                 "secure" : []
              }
