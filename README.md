@@ -15,18 +15,15 @@ Features
 Prerequisites
 ----------------
 
-* Python 2.7, 3.7 (Recommended Python 3.7+)
-* [Optional] SNMP requires the Python library scapy
-* ~[Optional] RDP requires the Python library rdpy~ (this module has been removed; we are currently determining a way forward with this.)
+* Python 3.7 as 2.x will not be supported in the very near future.
+* SNMP requires the Python library scapy
+* RDP requires the Python library rdpy~ (this module has been removed; we are currently determining a way forward with this.)
 * [Optional] Samba module needs a working installation of samba
 
-Installation [UBUNTU]
-----------
+Installation Linux
+------------------
 
-For updated and cleaner documentation, please head over to http://opencanary.org
-
-Installation on Ubuntu 20.04:
-(Please note that although we support Python 2.7; these instructions are aimed at running the Python 3 version)
+For Debian based distros,
 
 ```
 $ sudo apt-get install python3-dev python3-pip python3-virtualenv python3-venv python3-scapy libssl-dev libpcap-dev
@@ -34,62 +31,8 @@ $ sudo apt install samba # if you plan to use the smb module
 $ virtualenv env/
 $ . env/bin/activate
 $ pip install opencanary
-$ pip install scapy pcapy # optional
+$ pip install scapy pcapy rdpy
 ```
-Installation [OS X]
-----------
-
-Installation OS X needs an extra step, as multiple OpenSSL versions
-may exist which confounds the Python libraries using it.
-
-```
-$ virtualenv env/
-$ . env/bin/activate
-```
-
-Macports users should then run:
-```
-$ sudo port install openssl
-$ env ARCHFLAGS="-arch x86_64" LDFLAGS="-L/opt/local/lib" CFLAGS="-I/opt/local/include" pip install cryptography
-```
-
-Alternatively, homebrew users run:
-
-If Macbook is x86:
-````
-$ brew install openssl
-$ env ARCHFLAGS="-arch x86_64" LDFLAGS="-L/usr/local/opt/openssl/lib" CFLAGS="-I/usr/local/opt/openssl/include" pip install cryptography
-````
-
-if Macbook is M1:
-```
-$ brew install openssl
-$ env ARCHFLAGS="-arch arm64" LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib" CFLAGS="-I/opt/homebrew/opt/openssl@1.1/include" pip install cryptography
-```
-
-Now the installation can run as usual:
-```
-$ pip install opencanary
-$ pip install scapy pcapy # optional
-```
-Installation [GIT]
-----------
-
-To install from source, instead of running pip do the following:
-
-```
-$ git clone https://github.com/thinkst/opencanary
-$ cd opencanary
-$ python setup.py sdist
-$ cd dist
-$ pip install opencanary-<version>.tar.gz
-```
-
-If you are looking to get OpenCanary working on OpenBSD, take a look at https://github.com/8com/opencanary.
-
-Running OpenCanary
-----
-Please note that for the Portscan service, we have added a `portscan.ignore_localhost` setting which means the Opencanary `portscan` service will ignore (not alert on) portscans originating for the localhost IP (`127.0.0.1`). This setting is false by default.
 
 OpenCanary is started by running:
 
