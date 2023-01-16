@@ -57,13 +57,3 @@ When OpenCanary starts it looks for config files in the following order:
 3. /etc/opencanary/opencanary.conf
 
 It will use the first config file that exists.
-
-Samba Setup (optional)
-----------------------
-This is required for the `smb` module.
-
-Head over to our step by step wiki over [here](https://github.com/thinkst/opencanary/wiki/Opencanary-and-Samba)
-
-FAQ
----
-We have a FAQ over [here](https://github.com/thinkst/opencanary/wiki)
