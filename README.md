@@ -18,7 +18,7 @@ Prerequisites
 * Python 3.7 as 2.x will not be supported in the very near future.
 * SNMP requires the Python library scapy
 * [Mandatory] SMTP server to recieve real-time email alerts or email-to-SMS (if supported by your Telecom operator)
-* Gmail stopped accepting third party app logins. The workaround is the generate a third party app password for Canary
+* A TLS based SMTP server
 
 Installation Linux
 ------------------
