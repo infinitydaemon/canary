@@ -17,14 +17,13 @@ Prerequisites
 
 * Python 3.7 as 2.x will not be supported in the very near future.
 * SNMP requires the Python library scapy
-* RDP requires the Python library rdpy~ (this module has been removed; we are currently determining a way forward with this.)
-* [Optional] Samba module needs a working installation of samba
 * [Mandatory] SMTP server to recieve real-time email alerts or email-to-SMS (if supported by your Telecom operator)
+* Gmail stopped accepting third party app logins. The workaround is the generate a third party app password for Canary
 
 Installation Linux
 ------------------
 
-For Debian based distros,
+For Debian based distros only,
 
 ```
 $ sudo apt-get install python3-dev python3-pip python3-virtualenv python3-venv python3-scapy libssl-dev libpcap-dev
@@ -35,7 +34,7 @@ $ pip install opencanary
 $ pip install scapy pcapy
 ```
 
-OpenCanary is started by running:
+Canary is started by running:
 
 ```
 $ . env/bin/activate
