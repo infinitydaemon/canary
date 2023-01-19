@@ -6,4 +6,4 @@
                 "subject" : "CWD OpenCanary Alert",
                 "credentials" : ["myUsername", "myPassword"],
                 "secure" : []
-             }
+             },
