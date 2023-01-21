@@ -5,17 +5,16 @@ PIDFILE="${DIR}/opencanaryd.pid"
 cmd=$1
 
 function usage() {
-    echo -e "\n  CWD OpenCanary\n"
+    echo -e "\n  CWD Canary\n"
     echo -e "\topencanaryd [ --start | --dev | --stop | --restart | --copyconfig | --usermodule | --version | --help ]\n\n"
     echo -e "\t\t--start\tStarts the opencanaryd process"
-    echo -e "\t\t--dev\tRun the opencanaryd process in the foreground"
-    echo -e "\t\t--stop\tStops the opencanaryd process"
-    echo -e "\t\t--usermodule\tRun opencanaryd in foreground with only usermodules enabled"
+    echo -e "\t\t--dev\tRun the canary process in the foreground"
+    echo -e "\t\t--stop\tStops the canary process"
+    echo -e "\t\t--usermodule\tRun canary in foreground with only usermodules enabled"
     echo -e "\t\t--copyconfig\tCreates a default config file at /etc/opencanaryd/opencanary.conf"
     echo -e "\t\t--version\tDisplays the current opencanary version."
     echo -e "\t\t--"
     echo -e "\t\t--help\tThis help\n"
-
 }
 
 # Use sudo when not running as root
