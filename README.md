@@ -13,7 +13,7 @@
 Overview <br>
 ----------
 
-In essence, OpenCanary creates a network honeypot allowing you to catch hackers before they fully compromise your systems. As a technical definition, OpenCanary is a daemon that runs several canary versions of services that alerts when a service is (ab)used.
+In essence, OpenCanary creates a network honeypot allowing you to catch hackers before they fully compromise your systems. As a technical definition, OpenCanary is a daemon that runs several canary versions of services that alerts when a service is (ab)used. A simple example of CWD Canary implementation would be in a government or a large organizations where scale management requires a lot of network administration and manual intervention. CWD Canary will alert the designated staff about malicious activity before a malware or ransomware attack is set. 
 
 Features
 ----------
@@ -60,12 +60,7 @@ On the first run, instructions are printed that will get to a working config.
 ```
 $ opencanaryd --copyconfig
 ```
-<p align="center">
- <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://cwd.systems/img/canary3.png">
-    <img src="https://cwd.systems/img/canary3.png"  alt="CWD Canary">
-  </picture>
-  </p>
+
 
 Which will create a folder, `/etc/opencanary` and a config file inside that folder `opencanary.conf`. You must now edit the config file to determine which services and logging options you would like to enable.
 
