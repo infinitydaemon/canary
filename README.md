@@ -18,7 +18,7 @@ In essence, OpenCanary creates a network honeypot allowing you to catch hackers 
 Features
 ----------
 
-* Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place. Google's Gmail has stopped accepting so called Less Secure Apps so that won't work. The workaround has been published by CWD SYSTEMS.
+* Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place. Google's Gmail has stopped accepting so called Less Secure Apps so that won't work. The workaround has been applied by CWD SYSTEMS in its appliance.
 <p align="center">
  <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://cwd.systems/img/canary2.png">
