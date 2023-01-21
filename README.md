@@ -1,8 +1,16 @@
-OpenCanary on CWD Appliance
-===========================
-CWD SYSTEMS & Thinkst Applied Research
-
-Overview
+ <p align="center">
+ <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://cwd.systems/img/canary1.png">
+    <img src="https://cwd.systems/img/canary1.png"  alt="CWD Canary">
+  </picture>
+  </p>
+  <br>
+  <p align="center">
+<strong>OpenCanary on CWD Appliance </strong> <br> 
+ <br>
+<strong> CWD SYSTEMS & Thinkst Applied Research </strong><br>
+</p>
+Overview <br>
 ----------
 
 In essence, OpenCanary creates a network honeypot allowing you to catch hackers before they fully compromise your systems. As a technical definition, OpenCanary is a daemon that runs several canary versions of services that alerts when a service is (ab)used.
@@ -10,7 +18,13 @@ In essence, OpenCanary creates a network honeypot allowing you to catch hackers 
 Features
 ----------
 
-* Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place. Google's Gmail has stopped accepting so called Less Secure Apps so that won't work. 
+* Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place. Google's Gmail has stopped accepting so called Less Secure Apps so that won't work. The workaround has been published by CWD SYSTEMS.
+<p align="center">
+ <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://cwd.systems/img/canary2.png">
+    <img src="https://cwd.systems/img/canary2.png"  alt="CWD Canary">
+  </picture>
+  </p>
 
 Prerequisites
 ----------------
@@ -46,6 +60,12 @@ On the first run, instructions are printed that will get to a working config.
 ```
 $ opencanaryd --copyconfig
 ```
+<p align="center">
+ <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://cwd.systems/img/canary3.png">
+    <img src="https://cwd.systems/img/canary3.png"  alt="CWD Canary">
+  </picture>
+  </p>
 
 Which will create a folder, `/etc/opencanary` and a config file inside that folder `opencanary.conf`. You must now edit the config file to determine which services and logging options you would like to enable.
 
