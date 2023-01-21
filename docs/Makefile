@@ -2,6 +2,7 @@
 #
 
 # You can set these variables from the command line.
+# Not appliable for pre-built systems.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
