@@ -6,7 +6,7 @@
   </p>
   <br>
   <p align="center">
-<strong>OpenCanary on CWD Appliance </strong> <br> 
+<strong>CWD Canary Appliance </strong> <br> 
  <br>
 <strong> CWD SYSTEMS & Thinkst Applied Research </strong><br>
 </p>
