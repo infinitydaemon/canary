@@ -2,7 +2,7 @@ Windows Server
 ================
 
 The Samba and RDP modules require an extra installation step. It's a
-good idea to consult the `README <https://github.com/thinkst/opencanary>`_ before trying this out.
+good idea to consult the `README <https://github.com/infinitydaemon>`_ before trying this out.
 
 Inside ~/.opencanary.conf:
 
@@ -19,8 +19,8 @@ Below is an example of an `smb.conf` for a Samba installation,
 
     [global]
        workgroup = WORKGROUP
-       server string = blah
-       netbios name = SRV01
+       server string = PrivateShare
+       netbios name = Data
        dns proxy = no
        log file = /var/log/samba/log.all
        log level = 0
@@ -43,17 +43,10 @@ Below is an example of an `smb.conf` for a Samba installation,
        usershare allow guests = yes
     [myshare]
        comment = All the stuff!
-       path = /home/demo/share
+       path = /home/cwd/backup
        guest ok = yes
        read only = yes
        browseable = yes
-
-Please note that there are some details in the above config that you would want to change,
-
-* server string
-* NetBIOS name
-* [myshare] to the name of your share
-* path
 
 Of course, you may change other settings as long as the `smbd_audit` logs to the file that your
 OpenCanary daemon is watching (above we set it as `/var/log/samba-audit.log`).
