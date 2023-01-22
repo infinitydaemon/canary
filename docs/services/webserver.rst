@@ -24,8 +24,8 @@ Inside ~/.opencanary.conf:
         }
     ],
     "ssh.enabled": true,
-    "ssh.port": 8022,
-    "ssh.version": "SSH-2.0-OpenSSH_5.1p1 Debian-4",
+    "ssh.port": 2222,
+    "ssh.version": "SSH-2.0-OpenSSH_5.1p1 Debian-5",
    [..] # logging configuration
    }
 
