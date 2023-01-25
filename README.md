@@ -6,7 +6,7 @@
   </p>
   <br>
   <p align="center">
-<strong>CWD Canary Appliance </strong> <br> 
+<strong>CWD Canary Appliance Rev 1.0</strong> <br> 
  <br>
 <strong> CWD SYSTEMS & Thinkst Applied Research </strong><br>
 </p>
