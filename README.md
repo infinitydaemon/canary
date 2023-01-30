@@ -20,6 +20,7 @@ class CWD_CANARY():
     self.location = "USA, Canada, Pakistan, KyrgzRepublic, Indonesia";
     self.protonmail = "@cwdsystems";
     self.web = "https://cwd.systems";
+    self.languages ="Python,C";
   
   def __str__(self):
     return self.name
