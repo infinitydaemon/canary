@@ -10,20 +10,23 @@
  <br>
 <strong> CWD SYSTEMS & Thinkst Applied Research </strong><br>
 </p>
-<p align="center">
-  <a href="https://github.com/infinitydaemon/github-profile-trophy/issues">
-    <img src="https://img.shields.io/github/issues/infinitydaemon/github-profile-trophy"/> 
-  </a>
-  <a href="https://github.com/infinitydaemon/github-profile-trophy/network/members">
-    <img src="https://img.shields.io/github/forks/infinitydaemon/github-profile-trophy"/> 
-  </a>  
-  <a href="https://github.com/infinitydaemon/github-profile-trophy/stargazers">
-    <img src="https://img.shields.io/github/stars/infinitydaemon/github-profile-trophy"/> 
-  </a>
-    <a href="https://github.com/infinitydaemon/github-profile-trophy/LICENSE">
-    <img src="https://img.shields.io/github/license/infinitydaemon/github-profile-trophy"/> 
-  </a>
-</p>
+
+```python
+class CWD_CANARY():
+    
+  def __init__(self):
+    self.name = "cwd";
+    self.username = "cwdsystems";
+    self.location = "USA, Canada, Pakistan, KyrgzRepublic, Indonesia";
+    self.protonmail = "@cwdsystems";
+    self.web = "https://cwd.systems";
+  
+  def __str__(self):
+    return self.name
+
+if __name__ == '__main__':
+    me = CWD_CANARY()
+```
 Overview <br>
 ----------
 
