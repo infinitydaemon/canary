@@ -4,11 +4,11 @@ from twisted.internet.protocol import Protocol
 from twisted.internet.protocol import Factory
 from twisted.application import internet
 
-class Example1Protocol(Protocol):
+class SIP(Protocol):
     """
-    Example Telnet Protocol
+    Example SIP Protocol
 
-    $ telnet localhost 8025
+    $ telnet localhost 5060
     Trying 127.0.0.1...
     Connected to localhost.
     Escape character is '^]'.
@@ -17,16 +17,6 @@ class Example1Protocol(Protocol):
     password:
     % Bad passwords
     Connection closed by foreign host.
-
-    Nmap's version detection is convinced:
-
-    $ nmap -sV 127.0.0.1 -p 8025
-    Starting Nmap 6.47 ( http://nmap.org ) at 2015-07-24 11:40 SAST
-    Nmap scan report for localhost (127.0.0.1)
-    Host is up (0.000079s latency).
-    PORT     STATE SERVICE VERSION
-    8025/tcp open  telnet  D-Link ADSL router telnetd
-    Service Info: Device: router
     """
     def __init__(self):
         self.prompts = 0
@@ -62,7 +52,7 @@ class Example1Protocol(Protocol):
                 self.transport.write("\r\n% Bad passwords\r\n")
                 self.transport.loseConnection()
 
-class CanaryExample1(Factory, CanaryService):
+class SIP(Factory, CanaryService):
     NAME = 'example1'
     protocol = Example1Protocol
 
@@ -71,4 +61,4 @@ class CanaryExample1(Factory, CanaryService):
         self.port = config.getVal("example1.port", 8025)
         self.logtype = logger.LOG_BASE_EXAMPLE
 
-CanaryServiceFactory = CanaryExample1
+CanaryServiceFactory = SIP
