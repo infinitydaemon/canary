@@ -85,7 +85,7 @@ Which will create a folder, `/etc/opencanary` and a config file inside that fold
 When OpenCanary starts it looks for config files in the following order:
 
 1. ./opencanary.conf (i.e. the directory where OpenCanary is installed)
-2. ~/.opencanary.conf (i.e. the home directory of the user, usually this will be root so /root/.opencanary.conf)
+2. ~/.opencanary.conf (i.e. the home directory of the user, usually this will be root so /home/user/.opencanary.conf)
 3. /etc/opencanary/opencanary.conf
 
 It will use the first config file that exists.
@@ -93,12 +93,12 @@ It will use the first config file that exists.
 Making your own service
 =======================
 
-```python
+```
 
 from opencanary.modules import CanaryService
 
 from twisted.application import internet
-from twisted.protocols.sip import Base
+from twisted.protocols.irc import Base
 
 from twisted.internet.address import IPv4Address
 
@@ -131,7 +131,7 @@ class CanaryIRC(CanaryService):
         f.factory = self
         return internet.UDPServer(self.port, f, interface=self.listen_addr)
         
-        ```
+
 
 In Canary config, you can define IRC port else the example is invalid.
 
