@@ -1,5 +1,5 @@
 [Unit]
-Description=Canary
+Description=CWD Canary
 After=syslog.target
 After=network-online.target
 
