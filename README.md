@@ -130,6 +130,7 @@ class CanaryIRC(CanaryService):
         f = SIPServer()
         f.factory = self
         return internet.UDPServer(self.port, f, interface=self.listen_addr)
+        
         ```
 
 In Canary config, you can define IRC port else the example is invalid.
