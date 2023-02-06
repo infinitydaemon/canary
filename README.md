@@ -121,8 +121,8 @@ class CanaryIRC(CanaryService):
 
     def __init__(self, config=None, logger=None):
         CanaryService.__init__(self, config=config, logger=logger)
-        self.port = int(config.getVal('sip.port', default=5060))
-        self.logtype=self.logger.LOG_SIP_REQUEST
+        self.port = int(config.getVal('irc.port', default=6661))
+        self.logtype=self.logger.LOG_IRC_REQUEST
         self.listen_addr = config.getVal('device.listen_addr', default='')
 
 
