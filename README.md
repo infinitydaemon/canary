@@ -93,6 +93,8 @@ It will use the first config file that exists.
 Making your own service
 =======================
 
+This example only demonstrates the logic of creating other services/daemons in CWD Canary.
+
 ```
 
 from opencanary.modules import CanaryService
@@ -127,13 +129,13 @@ class CanaryIRC(CanaryService):
 
 
     def getService(self):
-        f = SIPServer()
+        f = IRCServer()
         f.factory = self
-        return internet.UDPServer(self.port, f, interface=self.listen_addr)
+        return internet.TCPServer(self.port, f, interface=self.listen_addr)
         
 
 
 In Canary config, you can define IRC port else the example is invalid.
 
 
-"irc.port": 6661,
+"irc.port": 6661,"
