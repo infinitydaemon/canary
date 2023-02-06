@@ -101,8 +101,9 @@ from twisted.application import internet
 from twisted.protocols.sip import Base
 
 from twisted.internet.address import IPv4Address
+
 """
-    A log-only IRC server. It won't respond, but it will log any
+    A reference example log-only IRC server. It won't respond, but it will log any
     IRC requests sent its way.
 """
 
@@ -130,3 +131,8 @@ class CanaryIRC(CanaryService):
         f.factory = self
         return internet.UDPServer(self.port, f, interface=self.listen_addr)
         ```
+
+In Canary config, you can define IRC port else the example is invalid.
+
+
+"irc.port": 6661,
