@@ -93,10 +93,15 @@ It will use the first config file that exists.
 Sample Email Alert <br>
 ------------
 ```
-{"dst_host": "10.3.1.27", "dst_port": "22", "local_time": "2023-02-04 07:21:50.860949",
-"local_time_adjusted": "2023-02-04 07:21:50.861096", "logdata": {"CWR": "", "DF": "", 
-"ECE": "", "ID": "0", "IN": "eth0", "LEN": "64", "MAC": "e4:5f:01:a0:15:e6:9c:1e:95:3a:7b:a0:08:00",
-"OUT": "", "PREC": "0x00", "PROTO": "TCP", "RES": "0x00", "SYN": "", "TOS": "0x00", "TTL": "49",
-"URGP": "0", "WINDOW": "65535"}, "logtype": 5001, "node_id": "cwd-1", "src_host": "51.17.2.152", 
+{"dst_host": "10.3.1.27", "dst_port": "22", 
+"local_time": "2023-02-04 07:21:50.860949",
+"local_time_adjusted": "2023-02-04 07:21:50.861096",
+"logdata": {"CWR": "", "DF": "", 
+"ECE": "", "ID": "0", "IN": "eth0", "LEN": "64", 
+"MAC": "e4:5f:01:a0:15:e6:9c:1e:95:3a:7b:a0:08:00",
+"OUT": "", "PREC": "0x00", "PROTO": "TCP", "RES": "0x00",
+"SYN": "", "TOS": "0x00", "TTL": "49",
+"URGP": "0", "WINDOW": "65535"}, "logtype": 5001,
+"node_id": "cwd-1", "src_host": "51.17.2.152", 
 "src_port": "23087", "utc_time": "2023-02-04 07:21:50.861053"}
 ```
