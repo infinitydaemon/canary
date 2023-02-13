@@ -1,4 +1,12 @@
+* Static IP Allocation
+
 interface eth0
 static ip_address=your-private-net/24
 static routers=cwd.gate-ip-address
 static domain_name_servers=cwd.gate-ip-address
+
+* Dynamic IP Allocation
+
+auto eth0
+allow-hotplug eth0
+iface eth0 inet dhcp
