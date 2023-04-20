@@ -1,5 +1,4 @@
 from opencanary.modules import CanaryService
-
 from twisted.application import internet
 from twisted.protocols.ftp import FTPFactory, FTPRealm, FTP, \
                             USR_LOGGED_IN_PROCEED, GUEST_LOGGED_IN_PROCEED, IFTPShell, \
@@ -20,18 +19,11 @@ class DenyAllAccess:
         return failure.Failure(cred_error.UnauthorizedLogin())
 
 class LoggingFTP(FTP):
-    #ripped from main FTP class, overridden to extract connection info
     def ftp_PASS(self, password):
-        """
-        Second part of login.  Get the password the peer wants to
-        authenticate with.
-        """
         if self.factory.allowAnonymous and self._user == self.factory.userAnonymous:
-            # anonymous login
             creds = credentials.Anonymous()
             reply = GUEST_LOGGED_IN_PROCEED
         else:
-            # user login
             creds = credentials.UsernamePassword(self._user, password)
             reply = USR_LOGGED_IN_PROCEED
 
@@ -41,7 +33,6 @@ class LoggingFTP(FTP):
         del self._user
 
         def _cbLogin(login_details):
-            # login_details is a list (interface, avatar, logout)
             assert login_details[0] is IFTPShell, "The realm is busted, jerk."
             self.shell = login_details[1]
             self.logout = login_details[2]
@@ -61,13 +52,11 @@ class LoggingFTP(FTP):
 class CanaryFTP(CanaryService):
     NAME = 'ftp'
 
-    def __init__(self,config=None, logger=None):
-        CanaryService.__init__(self, config=config, logger=logger)
+    def __init__(self, config=None, logger=None):
+        super().__init__(config=config, logger=logger)
 
         self.banner = config.getVal('ftp.banner', default='FTP Ready.').encode('utf8')
         self.port = config.getVal('ftp.port', default=21)
-        # find a place to check that logtype is initialised
-        # find a place to check that factory has service attached
         self.logtype = logger.LOG_FTP_LOGIN_ATTEMPT
         self.listen_addr = config.getVal('device.listen_addr', default='')
 
