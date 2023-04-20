@@ -5,144 +5,94 @@ import datetime
 DOMAIN = 'ABC123'
 APIKEY = 'ABC123'
 
-def func_pingconsole():
+def ping_console():
 
     start = datetime.datetime.now()
 
     print("Benchmarking time to ping Console...")
 
-    url = 'https://'+DOMAIN+'.canary.tools/api/v1/ping'
+    url = f'https://{DOMAIN}.canary.tools/api/v1/ping'
 
     payload = {
-    'auth_token': APIKEY
+        'auth_token': APIKEY
     }
 
-    r = requests.get(url, params=payload).json()
+    try:
+        response = requests.get(url, params=payload)
+        response.raise_for_status()
+        data = response.json()
+        end = datetime.datetime.now()
+        diff = end - start
+        print(f"Ping Console complete, time taken: {start} - {end}")
+        print(f"Time Taken: {diff}\n")
+        with open('Ping_Console_Result.txt', 'w') as export:
+            json.dump(data, export, indent=4)
+    except requests.exceptions.HTTPError as e:
+        print(f"An HTTP error occurred: {e}")
 
-    end = datetime.datetime.now()
-    diff = end - start
+def fetch_devices():
 
-    print("Ping Console complete, time taken: "+str(start)+" - "+str(end))
-    print("Time Taken: "+str(diff)+"\n")
-
-    with open('Ping_Console_Result.txt', 'w') as export:
-        json.dump(r, export)
-
-def func_fetchdevices():
-
-    url = 'https://'+DOMAIN+'.canary.tools/api/v1/devices/all'
+    url = f'https://{DOMAIN}.canary.tools/api/v1/devices/all'
 
     start = datetime.datetime.now()
 
     print("Benchmarking time to fetch all device details...")
-    
+
     payload = {
-    'auth_token': APIKEY
+        'auth_token': APIKEY
     }
 
-    r = requests.get(url, params=payload).json()
-    
-    end = datetime.datetime.now()
-    diff = end - start
+    try:
+        response = requests.get(url, params=payload)
+        response.raise_for_status()
+        data = response.json()
+        end = datetime.datetime.now()
+        diff = end - start
+        print(f"Fetch Devices complete, time taken: {start} - {end}")
+        print(f"Time Taken: {diff}\n")
+        with open('Fetch_Devices_Result.txt', 'w') as export:
+            json.dump(data, export, indent=4)
+    except requests.exceptions.HTTPError as e:
+        print(f"An HTTP error occurred: {e}")
 
-    print("Fetch Devices complete, time taken: "+str(start)+" - "+str(end))
-    print("Time Taken: "+str(diff)+"\n")
-    
-    with open('Fetch_Devices_Result.txt', 'w') as export:
-        json.dump(r, export)
+def fetch_tokens():
 
-def func_fetchtokens():
-
-    url = 'https://'+DOMAIN+'.canary.tools/api/v1/canarytokens/fetch'
+    url = f'https://{DOMAIN}.canary.tools/api/v1/canarytokens/fetch'
 
     start = datetime.datetime.now()
 
     print("Benchmarking time to fetch all Tokens...")
 
     payload = {
-    'auth_token': APIKEY
+        'auth_token': APIKEY
     }
 
-    r = requests.get(url, params=payload).json()
+    try:
+        response = requests.get(url, params=payload)
+        response.raise_for_status()
+        data = response.json()
+        end = datetime.datetime.now()
+        diff = end - start
+        print(f"Fetch Tokens complete, time taken: {start} - {end}")
+        print(f"Time Taken: {diff}\n")
+        with open('Fetch_Tokens_Result.txt', 'w') as export:
+            json.dump(data, export, indent=4)
+    except requests.exceptions.HTTPError as e:
+        print(f"An HTTP error occurred: {e}")
 
-    end = datetime.datetime.now()
+def fetch_incidents():
 
-    diff = end - start
-
-    print("Fetch Tokens complete, time taken: "+str(start)+" - "+str(end))
-    print("Time Taken: "+str(diff)+"\n")
-
-    with open('Fetch_Tokens_Result.txt', 'w') as export:
-        json.dump(r, export)
-
-def func_fetchincidents():
-
-    url = 'https://'+DOMAIN+'.canary.tools/api/v1/incidents/all'
+    url = f'https://{DOMAIN}.canary.tools/api/v1/incidents/all'
 
     start = datetime.datetime.now()
 
     print("Benchmarking time to fetch all Incident data...")
 
     payload = {
-    'auth_token': APIKEY
+        'auth_token': APIKEY
     }
 
-    r = requests.get(url, params=payload).json()
-
-    end = datetime.datetime.now()
-
-    diff = end - start
-
-    print("Fetch Incidents complete, time taken: "+str(start)+" - "+str(end))
-    print("Time Taken: "+str(diff)+"\n")
-
-    with open('Fetch_Incidents_Result.txt', 'w') as export:
-        json.dump(r, export)
-
-def func_fetchaudit():
-
-    url = 'https://'+DOMAIN+'.canary.tools/api/v1/audit_trail/fetch'
-
-    start = datetime.datetime.now()
-
-    print("Benchmarking time to fetch all audit data...")
-
-    payload = {
-    'auth_token': APIKEY
-    }
-
-    r = requests.get(url, params=payload).json()
-
-    end = datetime.datetime.now()
-
-    diff = end - start
-
-    print("Fetch Audit complete, time taken: "+str(start)+" - "+str(end))
-    print("Time Taken: "+str(diff)+"\n")
-
-    with open('Fetch_Audit_Result.txt', 'w') as export:
-        json.dump(r, export)
-
-def func_fetchexample():
-
-    url = 'https://example.com'
-
-    start = datetime.datetime.now()
-
-    print("Benchmarking time to fetch example.com...")
-
-    r = requests.get(url)
-
-    end = datetime.datetime.now()
-    
-    diff = end - start
-
-    print("Fetch Example.com complete, time taken: "+str(start)+" - "+str(end))
-    print("Time Taken: "+str(diff)+"\n")
-
-func_pingconsole()
-func_fetchdevices()
-func_fetchtokens()
-func_fetchincidents()
-func_fetchaudit()
-func_fetchexample()
+    try:
+        response = requests.get(url, params=payload)
+        response.raise_for_status()
+        data = response.json()
