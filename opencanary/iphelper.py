@@ -1,33 +1,26 @@
 import struct
 import socket
 
-def ip2int(addr):
+def ip2int(addr: str) -> int:
     """
-    Convert an IP in string format to decimal format
+    Convert an IP address from string format to integer format.
     """
-
     return struct.unpack("!I", socket.inet_aton(addr))[0]
 
-def check_ip(ip, network_range):
+def check_ip(ip: str, network_range: str) -> bool:
     """
-    Test if the IP is in range
-
-    Range is expected to be in CIDR notation format. If no MASK is
-    given /32 is used. It return True if the IP is in the range.
+    Test if an IP address is in a given network range.
+    
+    The network range is expected to be in CIDR notation format. If no subnet
+    mask is given, /32 is used. Returns True if the IP is in the range, False
+    otherwise.
     """
-
-    netItem = str(network_range).split('/')
-    rangeIP = netItem[0]
-    if len(netItem) == 2:
-        rangeMask = int(netItem[1])
-    else:
-        rangeMask = 32
-
+    network_addr, subnet_mask = network_range.split('/')
+    subnet_mask = int(subnet_mask) if subnet_mask else 32
     try:
-        ripInt = ip2int(rangeIP)
-        ipInt = ip2int(ip)
-        result = not ((ipInt ^ ripInt) & 0xFFFFFFFF << (32 - rangeMask));
-    except:
-        result = False
-
-    return result
+        network_addr_int = ip2int(network_addr)
+        ip_int = ip2int(ip)
+        subnet_mask_int = (0xFFFFFFFF << (32 - subnet_mask)) & 0xFFFFFFFF
+        return (ip_int & subnet_mask_int) == (network_addr_int & subnet_mask_int)
+    except (socket.error, struct.error):
+        return False
