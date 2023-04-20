@@ -1,18 +1,9 @@
 from opencanary.modules import CanaryService
-
 from twisted.application import internet
 from twisted.internet.protocol import DatagramProtocol
-
 from twisted.application.internet import UDPServer
 from twisted.internet.address import IPv4Address
-
 from twisted.internet import protocol
-
-"""
-    A log-only NTP server. It won't respond, but it will log attempts
-    to trigger the MON_GETLIST_1 NTP commands, which is used for DDOS
-    and network recon.
-"""
 
 class MiniNtp(DatagramProtocol):
     def datagramReceived(self, data, host_and_port):
@@ -25,7 +16,6 @@ class MiniNtp(DatagramProtocol):
                 pass
 
         if d and (len(data) < 4 or d[3]!= u'*'): #monlist command
-            #bogus packet, discard
             return
         logdata={'NTP CMD': 'monlist'}
         self.transport.getPeer = lambda: IPv4Address('UDP', host_and_port[0], host_and_port[1])
