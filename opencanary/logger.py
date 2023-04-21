@@ -11,40 +11,44 @@ import requests
 
 from opencanary.iphelper import *
 
+
 class Singleton(type):
     _instances = {}
+
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
 
+
 def getLogger(config):
     try:
-        d = config.getVal('logger')
+        logger_config = config.get('logger')
     except Exception as e:
         print("Error: config does not have 'logger' section", file=sys.stderr)
-        exit(1)
+        sys.exit(1)
 
-    classname = d.get('class', None)
-    if classname is None:
+    logger_class = logger_config.get('class')
+    if logger_class is None:
         print("Logger section is missing the class key.", file=sys.stderr)
-        exit(1)
+        sys.exit(1)
 
-    LoggerClass = globals().get(classname, None)
+    LoggerClass = globals().get(logger_class, None)
     if LoggerClass is None:
-        print("Logger class (%s) is not defined." % classname, file=sys.stderr)
-        exit(1)
+        print(f"Logger class ({logger_class}) is not defined.", file=sys.stderr)
+        sys.exit(1)
 
-    kwargs = d.get('kwargs', None)
-    if kwargs is None:
+    logger_kwargs = logger_config.get('kwargs', {})
+    if not logger_kwargs:
         print("Logger section is missing the kwargs key.", file=sys.stderr)
-        exit(1)
+        sys.exit(1)
+
     try:
-        logger = LoggerClass(config, **kwargs)
+        logger = LoggerClass(config, **logger_kwargs)
     except Exception as e:
-        print("An error occurred initialising the logger class", file=sys.stderr)
+        print("An error occurred initializing the logger class", file=sys.stderr)
         print(e)
-        exit(1)
+        sys.exit(1)
 
     return logger
 
