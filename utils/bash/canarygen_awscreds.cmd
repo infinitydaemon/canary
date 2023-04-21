@@ -17,14 +17,14 @@ set console=ab123456.canary.tools
 ECHO Using console %console%
 
 REM Token memo
-set tokenmemo=\"Consider any AWS creds from %USERNAME% on %COMPUTERNAME% compromised\"
+set tokenmemo="Consider any AWS creds from %USERNAME% on %COMPUTERNAME% compromised"
 
 REM Base URL
-set baseurl="https://$console/api/v1/canarytoken/create?auth_token=%token%&memo=%tokenmemo%&kind=aws-id&aws_id_username=%USERNAME%"
+set baseurl="https://%console%/api/v1/canarytoken/create?auth_token=%token%&memo=%tokenmemo%&kind=aws-id&aws_id_username=%USERNAME%"
 
 REM Run the jewels
 ECHO Creating token. One moment...
-%curl% -s -X POST https://%console%/api/v1/canarytoken/create -d "auth_token=%token%&memo=%tokenmemo%&kind=aws-id" | %jq% -r ".canarytoken.renders.\"aws-id\"" > awscreds_%currdate%%currtime%.txt
+%curl% -s -X POST %baseurl% | %jq% -r ".canarytoken.renders.\"aws-id\"" > awscreds_%currdate%%currtime%.txt
 
 ECHO New AWS Credentials Canarytoken written to file awscreds_%currdate%%currtime%.txt
 pause
