@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
-from opencanary.correlator import main
+from opencanary.correlator.correlator import Correlator
+from opencanary.correlator.log import Logger
+from opencanary.correlator.storage import Storage
 
 if __name__ == "__main__":
-    main()	    
-
+    logger = Logger()
+    storage = Storage(logger)
+    correlator = Correlator(logger, storage)
+    correlator.run()
