@@ -5,7 +5,7 @@
 # Cleanup any residual files that may have been left behind from previously running the script
 rm -rf outside* canary-ips-*.txt
 
-curl -XGET "https://$CANARY_HASH.canary.tools/api/v1/incidents/outside_bird/search" -d auth_token=$CANARY_API_KEY -d node_ids=$BIRD_ID -G | jq '.src_ips[] | .ip_address' | sed 's/\"//g' | sort > canary-ips-$(date +%Y-%m-%d).txt
+curl -XGET "https://$CANARY_HASH.canary.tools/api/v1/incidents/outside_bird/search" -d auth_token=$CANARY_API_KEY -d node_ids=$BIRD_ID -G | jq '.src_ips[] | .ip_address' | sed 's/"//g' | sort > canary-ips-$(date +%Y-%m-%d).txt
 
 # Read through each line of the canary text file, send each IP through the GreyNoise Enterprise API, and create a detailed JSON report
 file="canary-ips-$(date +%Y-%m-%d).txt"
