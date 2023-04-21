@@ -1,21 +1,17 @@
 #!/bin/bash
-#
-# Requires curl and jq to be in the path
-# sudo apt install curl jq
 
-# Set this variable to your API token (grab it here: https://1234abcd.canary.tools/settings where "1234abcd" is your unique console's CNAME)
-export token=ABC123
+if ! command -v curl &> /dev/null || ! command -v jq &> /dev/null; then
+    echo "curl and jq are required to run this script. Please install them first."
+    exit 1
+fi
 
-# Customize this variable to match your console URL
-export console=ABC123.canary.tools
+read -r -p "Enter your API token: " token
 
-# Complete Filename
-export filename=$console-tokens.csv
-
-# Base URL
+export token
+export console="ABC123.canary.tools"
+export filename="$console-tokens.csv"
 export baseurl="https://$console/api/v1/canarytokens/fetch?auth_token=$token"
 
-# Run the jewels
-echo created_std,kind,memo > $filename
-curl -s "$baseurl" | jq -r '.tokens[] | [.created_printable, .kind, .memo | tostring] | @csv' >> $filename
-echo Results saved in $filename
+echo "created_std,kind,memo" > "$filename"
+curl -s "$baseurl" | jq -r '.tokens[] | [.created_printable, .kind, .memo | tostring] | @csv' >> "$filename"
+echo "Results saved in $filename"
