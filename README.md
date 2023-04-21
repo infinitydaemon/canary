@@ -31,7 +31,7 @@ if __name__ == '__main__':
 Overview <br>
 ----------
 
-In essence, OpenCanary creates a network honeypot allowing you to catch hackers before they fully compromise your systems. As a technical definition, OpenCanary is a daemon that runs several canary versions of services that alerts when a service is (ab)used. A simple example of CWD Canary implementation would be in a government or a large organizations where scale management requires a lot of network administration and manual intervention. CWD Canary will alert the designated staff about malicious activity before a malware or ransomware attack is set. 
+CWD Canary creates a network honeypot allowing you to catch hackers before they fully compromise your systems. As a technical definition, CWD Canary is a daemon that runs several canary versions of services that alerts when a service is (ab)used. A simple example of CWD Canary implementation would be in a government or a large organizations where scale management requires a lot of network administration and manual intervention. CWD Canary will alert the designated staff about malicious activity before a malware or ransomware attack is set. 
 
 Features
 ----------
