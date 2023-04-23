@@ -1,7 +1,9 @@
 # Delete Tokens
 # delete_tokens.py
-# Authors: Initially written by Jay then updated Adrian updated to Python3. Imroved and updated by  CWD SYSTEMS
-#        
+# Authors: Initially written by Jay then updated by Adrian to Python3. Improved and updated by  CWD SYSTEMS
+#
+# WARNING!!!!!  
+#
 # Be VERY careful with this script! It is designed to wipe out all tokens 
 # after some heavy automated API testing. Don't use it if you have any
 # production tokens that you've worked hard to create and deploy - you'll
