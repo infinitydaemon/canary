@@ -92,7 +92,7 @@ It will use the first config file that exists.
 
 Sample Email Alert <br>
 ------------
-```
+```bash
 {"dst_host": "10.3.1.27", "dst_port": "22", 
 "local_time": "2023-02-04 07:21:50.860949",
 "local_time_adjusted": "2023-02-04 07:21:50.861096",
