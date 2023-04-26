@@ -105,3 +105,6 @@ Sample Email Alert <br>
 "node_id": "cwd-1", "src_host": "51.17.2.152", 
 "src_port": "23087", "utc_time": "2023-02-04 07:21:50.861053"}
 ```
+Samba Setup (preconfigured)
+--------------------------
+This is required for the `smb` module. Without the configured daemon, canary will throw error and fail to start. 
