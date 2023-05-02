@@ -5,14 +5,16 @@ import sys
 
 
 def read(rel_path):
+    # Get the absolute path of the file relative to the current directory
     here = os.path.abspath(os.path.dirname(__file__))
+    # Read the contents of the file using the codecs module to handle Unicode
     with codecs.open(os.path.join(here, rel_path), 'r') as fp:
         return fp.read()
 
 def get_version(rel_path):
     """
-    Reading the package version dynamically.
-    https://packaging.python.org/en/latest/guides/single-sourcing-package-version/
+    Get the package version dynamically.
+    This function reads the contents of the specified file and extracts the package version.
     """
     for line in read(rel_path).splitlines():
         if line.startswith('__version__'):
