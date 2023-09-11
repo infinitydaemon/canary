@@ -17,7 +17,7 @@ class CWD_CANARY():
   def __init__(self):
     self.name = "cwd";
     self.username = "cwdsystems";
-    self.location = "USA, Canada, Pakistan, KyrgzRepublic, Indonesia";
+    self.location = "KyrgzRepublic";
     self.protonmail = "@cwdsystems";
     self.web = "https://cwd.systems";
     self.languages ="Python,Bash,C";
