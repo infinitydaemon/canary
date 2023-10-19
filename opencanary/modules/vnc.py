@@ -1,29 +1,16 @@
 from opencanary.modules import CanaryService
-
-from twisted.internet.protocol import Protocol
-from twisted.internet.protocol import Factory
-from twisted.application import internet
+from twisted.internet.protocol import Protocol, Factory
 
 from opencanary.modules.des import des
-import sys
-
 import os
 
 RFB_33  = b'003.003'
 RFB_37  = b'003.007'
 RFB_38  = b'003.008'
 
-#states
-PRE_INIT = 1
-HANDSHAKE_SEND = 2
-SECURITY_SEND = 3
-AUTH_SEND = 4
-AUTH_OVER = 5
-
-#if one of these is used in the VNC authentication attempt, alert that
-#a common password was tried
-COMMON_PASSWORDS=['111111', 'password', '123456', '111111','1234',
-                  'administrator','root','passw0rd']
+# Common passwords for VNC authentication attempt
+COMMON_PASSWORDS = ['111111', 'password', '123456', '111111','1234',
+                    'administrator','root','passw0rd']
 
 class ProtocolError(Exception):
     pass
@@ -39,53 +26,51 @@ class VNCProtocol(Protocol):
         self.serv_version = version
         self.state = PRE_INIT
 
-    def _send_handshake(self,):
-        print('send handshake')
-        version_string = 'RFB {version}\n'.format(version=self.serv_version.decode('utf-8'))
+    def _send_handshake(self):
+        self.log_debug('send handshake')
+        version_string = f'RFB {self.serv_version.decode("utf-8")}\n'
         self.transport.write(version_string.encode('utf-8'))
         self.state = HANDSHAKE_SEND
 
-    def _recv_handshake(self,data=None):
-        print('got handshake')
+    def _recv_handshake(self, data=None):
+        self.log_debug('got handshake')
         if len(data) != 12 or data[:3] != b'RFB':
             raise ProtocolError()
         client_ver = data[4:-1]
 
-        #support single version for now
         if client_ver not in [RFB_33, RFB_37, RFB_38]:
             raise UnsupportedVersion()
 
         self._send_security(client_ver)
 
-    def _send_security(self,client_ver):
-        print('send security')
+    def _send_security(self, client_ver):
+        self.log_debug('send security')
         if client_ver == RFB_33:
-            self.transport.write(b'\x00\x00\x00\x02')#specify VNC auth using 4 bytes
+            self.transport.write(b'\x00\x00\x00\x02')
             self._send_auth()
         else:
-            self.transport.write(b'\x01\x02')#VNC authentication
+            self.transport.write(b'\x01\x02')
             self.state = SECURITY_SEND
 
-
-    def _recv_security(self,data=None):
-        print('got security')
-        if len(data) != 1 and data != '\x02':
+    def _recv_security(self, data=None):
+        self.log_debug('got security')
+        if len(data) != 1 and data != b'\x02':
             raise ProtocolError()
         self._send_auth()
 
-    def _send_auth(self,):
-        print('send auth')
+    def _send_auth(self):
+        self.log_debug('send auth')
         self.challenge = os.urandom(16)
         self.transport.write(self.challenge)
         self.state = AUTH_SEND
 
-    def _recv_auth(self,data=None):
-        print('got auth')
+    def _recv_auth(self, data=None):
+        self.log_debug('got auth')
         if len(data) != 16:
             raise ProtocolError()
 
-        logdata = {"VNC Server Challenge" : self.challenge.hex(),
-                    "VNC Client Response": data.hex()}
+        logdata = {"VNC Server Challenge": self.challenge.hex(),
+                   "VNC Client Response": data.hex()}
 
         used_password = self._try_decrypt_response(response=data)
         if used_password:
@@ -100,38 +85,30 @@ class VNCProtocol(Protocol):
             raise ProtocolError()
         self._send_handshake()
 
-    def _send_auth_failed(self,):
-        self.transport.write(b'\x00\x00\x00\x01'+#response code
-                             b'\x00\x00\x00\x16'+#message length
-                             b'Authentication failure')#Message
+    def _send_auth_failed(self):
+        self.transport.write(b'\x00\x00\x00\x01' +
+                             b'\x00\x00\x00\x16' +
+                             b'Authentication failure')
         self.state = AUTH_OVER
         raise ProtocolError()
 
     def _try_decrypt_response(self, response=None):
-        #attempt to decrypt each of the common passwords
-        #really inefficient, but it means we don't have to rely on
-        #a static challenge
+        values = bytearray()
+        for x in response:
+            values.append(int(f'{x:08b}'[::-1], 2))
+
+        desbox = des(values)
+
         for password in COMMON_PASSWORDS:
-            pw = password[:8]#vnc passwords are max 8 chars
-            if len(pw) < 8:
-                pw+= '\x00'*(8-len(pw))
-
+            pw = (password + '\x00' * (8 - len(password)))[:8]
             pw = pw.encode('ascii')
-            # VNC use of DES requires password bits to be mirrored
-            values = bytearray()
-            for x in pw:
-                values.append(int('{:08b}'.format(x)[::-1], 2))
-            desbox = des(values)
+            decrypted_challenge = desbox.decrypt(pw)
 
-            decrypted_challenge = desbox.decrypt(response)
             if decrypted_challenge == self.challenge:
                 return password
         return None
 
     def dataReceived(self, data):
-        """
-        Received data is unbuffered so we buffer it for telnet.
-        """
         try:
             if self.state == HANDSHAKE_SEND:
                 self._recv_handshake(data=data)
@@ -151,5 +128,13 @@ class CanaryVNC(Factory, CanaryService):
         CanaryService.__init__(self, config, logger)
         self.port = config.getVal("vnc.port", 5900)
         self.logtype = logger.LOG_VNC
+        self.debug = config.getVal('vnc.debug', False)
+
+    def log_debug(self, message):
+        if self.debug:
+            print(message)
+
+    def getService(self):
+        return internet.TCPServer(self.port, self)
 
 CanaryServiceFactory = CanaryVNC
