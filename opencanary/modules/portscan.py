@@ -1,7 +1,8 @@
+import subprocess
 from opencanary.modules import CanaryService, FileSystemWatcher
-import os
 
 class SynLogWatcher(FileSystemWatcher):
+    """Custom log watcher for handling SYN scans."""
     def __init__(self, logger=None, logFile=None, ignore_localhost=False):
         super().__init__(fileName=logFile)
         self.logger = logger
@@ -22,17 +23,23 @@ class CanaryPortscan(CanaryService):
         self.listen_addr = config.getVal('device.listen_addr', default='')
         self.ignore_localhost = config.getVal('portscan.ignore_localhost', default=False)
 
+    def _execute_iptables_rule(self, rule, rate_limit, prefix):
+        """Execute iptables rule."""
+        command = f'sudo /sbin/iptables -t mangle {rule} -j LOG --log-level=warning --log-prefix="{prefix}" -m limit --limit="{rate_limit}"'
+        subprocess.run(command, shell=True, check=True)
+
     def setupIptablesRules(self, rule, rate_limit):
-        os.system(f'sudo /sbin/iptables -t mangle -D PREROUTING {rule} -j LOG --log-level=warning --log-prefix="canaryfw: " -m limit --limit="{rate_limit}/hour"')
-        os.system(f'sudo /sbin/iptables -t mangle -A PREROUTING {rule} -j LOG --log-level=warning --log-prefix="canaryfw: " -m limit --limit="{rate_limit}/hour"')
+        self._execute_iptables_rule(f'-D PREROUTING {rule} -i lo', f'{rate_limit}/hour')
+        self._execute_iptables_rule(f'-A PREROUTING {rule} -i lo', f'{rate_limit}/hour')
+        self._execute_iptables_rule(f'-D PREROUTING {rule} --syn ! -i lo', f'{rate_limit}/second')
+        self._execute_iptables_rule(f'-A PREROUTING {rule} --syn ! -i lo', f'{rate_limit}/second')
 
     def setupNmapRule(self, rule, rate_limit, prefix):
-        os.system(f'sudo /sbin/iptables -t mangle -D PREROUTING {rule} -j LOG --log-level=warning --log-prefix="{prefix}" -m limit --limit="{rate_limit}/second"')
-        os.system(f'sudo /sbin/iptables -t mangle -A PREROUTING {rule} -j LOG --log-level=warning --log-prefix="{prefix}" -m limit --limit="{rate_limit}/second"')
+        self._execute_iptables_rule(f'-D PREROUTING {rule}', f'{rate_limit}/second', prefix)
+        self._execute_iptables_rule(f'-A PREROUTING {rule}', f'{rate_limit}/second', prefix)
 
     def startYourEngines(self, reactor=None):
-        self.setupIptablesRules('-p tcp -i lo', self.lorate)
-        self.setupIptablesRules('-p tcp --syn ! -i lo', self.synrate)
+        self.setupIptablesRules('-p tcp', self.lorate)
         self.setupNmapRule('--tcp-flags ALL URG,PSH,SYN,FIN -m u32 --u32 "40=0x03030A01 && 44=0x02040109 && 48=0x080Affff && 52=0xffff0000 && 56=0x00000402"', self.nmaposrate, 'canarynmap: ')
         self.setupNmapRule('-p tcp -m u32 --u32 "6&0xFF=0x6 && 0>>22&0x3C@12=0x50000400"', self.nmaposrate, 'canarynmapNULL: ')
         self.setupNmapRule('-p tcp -m u32 --u32 "6&0xFF=0x6 && 0>>22&0x3C@12=0x50290400"', self.nmaposrate, 'canarynmapXMAS: ')
