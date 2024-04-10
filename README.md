@@ -6,7 +6,7 @@
   </p>
   <br>
   <p align="center">
-<strong>CWD Canary Appliance Rev 1.0</strong><img height="40" src="https://emoji.gg/assets/emoji/7333-parrotdance.gif"> <br> 
+<strong>CWD Canary Appliance Rev 1.2</strong><img height="40" src="https://emoji.gg/assets/emoji/7333-parrotdance.gif"> <br> 
  <br>
 <strong> CWD SYSTEMS & Thinkst Applied Research </strong><br>
 </p>
