@@ -1,4 +1,5 @@
 #!/bin/bash
+
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 PIDFILE="${DIR}/opencanaryd.pid"
 
@@ -13,25 +14,23 @@ function usage() {
     echo -e "\t\t--usermodule\tRun canary in foreground with only usermodules enabled"
     echo -e "\t\t--copyconfig\tCreates a default config file at /etc/opencanaryd/opencanary.conf"
     echo -e "\t\t--version\tDisplays the current opencanary version."
-    echo -e "\t\t--"
     echo -e "\t\t--help\tThis help\n"
-
 }
 
 # Use sudo when not running as root
-function sudo() {
+function run_with_sudo() {
   if [ "$EUID" -ne 0 ]; then
-    $(which sudo) $*
+    sudo "$@"
   else
-    # Strip `sudo -E` before running the remaining command
-    ${*:2}
+    # Execute the command directly if already running as root
+    "$@"
   fi
 }
 
 if [ "${cmd}" == "--start" ]; then
-    sudo -E "${DIR}/twistd" -y "${DIR}/opencanary.tac" --pidfile "${PIDFILE}" --syslog --prefix=opencanaryd
+    run_with_sudo "${DIR}/twistd" -y "${DIR}/opencanary.tac" --pidfile "${PIDFILE}" --syslog --prefix=opencanaryd
 elif [ "${cmd}" == "--dev" ]; then
-    sudo -E "${DIR}/twistd" -noy "${DIR}/opencanary.tac"
+    run_with_sudo "${DIR}/twistd" -noy "${DIR}/opencanary.tac"
 elif [ "${cmd}" == "--usermodule" ]; then
   usermodconf=$(python -c "from pkg_resources import resource_filename; print(resource_filename('opencanary', 'data/settings-usermodule.json'))")
 
@@ -43,23 +42,23 @@ elif [ "${cmd}" == "--usermodule" ]; then
   fi
 
   cp "${usermodconf}" opencanary.conf
-  sudo -E "${DIR}/twistd" -noy "${DIR}/opencanary.tac"
+  run_with_sudo "${DIR}/twistd" -noy "${DIR}/opencanary.tac"
 
 elif [ "${cmd}" == "--restart" ]; then
-    pid=`sudo -E cat "${PIDFILE}"`
-    sudo -E kill "$pid"
-    sudo -E "${DIR}/twistd" -y "${DIR}/opencanary.tac" --pidfile "${PIDFILE}" --syslog --prefix=opencanaryd
+    pid=$(run_with_sudo cat "${PIDFILE}")
+    run_with_sudo kill "$pid"
+    run_with_sudo "${DIR}/twistd" -y "${DIR}/opencanary.tac" --pidfile "${PIDFILE}" --syslog --prefix=opencanaryd
 elif [ "${cmd}" == "--stop" ]; then
-    pid=`sudo -E cat "${PIDFILE}"`
-    sudo -E kill "$pid"
+    pid=$(run_with_sudo cat "${PIDFILE}")
+    run_with_sudo kill "$pid"
 elif [ "${cmd}" == "--copyconfig" ]; then
     if [ -f /etc/opencanaryd/opencanary.conf ]; then
         echo "A config file already exists at /etc/opencanaryd/opencanary.conf, please move it first"
         exit 1
     fi
     defaultconf=$(python3 -c "from pkg_resources import resource_filename; print(resource_filename('opencanary', 'data/settings.json'))")
-    sudo -E mkdir -p /etc/opencanaryd
-    sudo -E cp "${defaultconf}" /etc/opencanaryd/opencanary.conf
+    run_with_sudo mkdir -p /etc/opencanaryd
+    run_with_sudo cp "${defaultconf}" /etc/opencanaryd/opencanary.conf
     echo -e "[*] A sample config file is ready /etc/opencanaryd/opencanary.conf\n"
     echo    "[*] Edit your configuration, then launch with \"opencanaryd --start\""
 elif [ "${cmd}" == "--version" ]; then
