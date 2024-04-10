@@ -31,10 +31,28 @@ if __name__ == '__main__':
 Overview <br>
 ----------
 
-CWD Canary creates a network honeypot allowing you to catch hackers before they fully compromise your systems. As a technical definition, CWD Canary is a daemon that runs several canary versions of services that alerts when a service is (ab)used. A simple example of CWD Canary implementation would be in a government or a large organizations where scale management requires a lot of network administration and manual intervention. CWD Canary will alert the designated staff about malicious activity before a malware or ransomware attack is set. 
+CWD Canary is a specialized honeypot solution designed for detecting and mitigating cyber threats within network environments. Tailored to the needs of security-conscious organizations, CWD Canary operates by emulating various network services and devices to lure potential attackers, allowing for the monitoring and analysis of their activities.
 
-Features
+Honeypot Architecture: CWD Canary utilizes a sophisticated architecture that mimics legitimate network assets, such as servers, routers, and IoT devices, to create an enticing target for attackers. By simulating these services, CWD Canary effectively draws in malicious actors and provides insights into their tactics and techniques.
+
+Decoy Services: CWD Canary offers a range of decoy services, including SSH, HTTP, FTP, and others, which can be customized and configured to match the specific needs of the network environment. These decoy services are designed to closely resemble their genuine counterparts, enhancing the believability of the honeypot.
+
+Logging and Analysis: CWD Canary captures detailed logs of all interactions with decoy services, recording information such as IP addresses, connection attempts, commands executed, and payloads transmitted. These logs are invaluable for analyzing attacker behavior, identifying emerging threats, and informing incident response efforts.
+
+Alerting Mechanisms: CWD Canary incorporates robust alerting mechanisms to promptly notify security personnel of suspicious activity. Alerts can be configured based on predefined thresholds and criteria, ensuring that potential threats are identified and addressed in a timely manner.
+
+Customization Options: CWD Canary provides extensive customization options, allowing administrators to tailor the honeypot's behavior to suit their unique security requirements. This includes the ability to define custom protocols, deploy additional sensors, and fine-tune logging and alerting settings.
+
+Integration Capabilities: CWD Canary seamlessly integrates with existing security infrastructure, enabling organizations to leverage its capabilities alongside other security tools and technologies. Integration with SIEM platforms, threat intelligence feeds, and incident response systems enhances visibility and coordination across the security ecosystem.
+
+Scalability and Performance: CWD Canary is designed to scale gracefully to accommodate the needs of both small and large-scale deployments. Its lightweight footprint and efficient resource utilization ensure minimal impact on network performance while maximizing detection capabilities.
+
+Continuous Improvement: CWD Canary benefits from ongoing development and support, with regular updates and enhancements to address emerging threats and vulnerabilities. The CWD Canary community actively contributes to its evolution, sharing insights, best practices, and additional features to strengthen its effectiveness.
+
+Summary
 ----------
+
+In summary, CWD Canary is a powerful tool for proactive threat detection and defense, offering advanced capabilities for monitoring and analyzing malicious activity within network environments. Its flexible architecture, extensive customization options, and seamless integration make it a valuable asset for organizations seeking to enhance their cybersecurity posture.
 
 * Receive email alerts as soon as potential threats are detected, highlighting the threat source IP address and where the breach may have taken place. Google's Gmail has stopped accepting so called Less Secure Apps so that won't work. The workaround has been applied by CWD SYSTEMS in its appliance.
 <p align="center">
