@@ -8,4 +8,7 @@ if __name__ == "__main__":
     logger = Logger()
     storage = Storage(logger)
     correlator = Correlator(logger, storage)
-    correlator.run()
+    try:
+        correlator.run()
+    except KeyboardInterrupt:
+        print("Correlator stopped by user.")
