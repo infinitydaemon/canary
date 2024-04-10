@@ -4,12 +4,15 @@ After=syslog.target
 After=network-online.target
 
 [Service]
-User=root
+User=nonrootuser
+Group=nonrootgroup
 Type=oneshot
 RemainAfterExit=yes
 Restart=always
 ExecStart=/home/cwd/env/bin/opencanaryd --start
 ExecStop=/home/cwd/env/bin/opencanaryd --stop
+WorkingDirectory=/home/cwd
+Environment=PATH=/home/cwd/env/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 [Install]
 WantedBy=multi-user.target
