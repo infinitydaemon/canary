@@ -4,7 +4,8 @@ from passlib.context import CryptContext
 
 if len(sys.argv) != 2:
     print("Usage: %s password" % sys.argv[0])
-    exit(1)
+    sys.exit(1)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-print(pwd_context.hash(sys.argv[1]))
+hashed_password = pwd_context.hash(sys.argv[1])
+print(hashed_password)
