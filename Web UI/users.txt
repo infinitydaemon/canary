@@ -1,0 +1,2 @@
+admin:$2y$10$wH8SK1dLJvLJ1p8lEIVQGeYlTj9F8BOj1e1eN9P4xl6UovGwUtFoG
+canary:$2y$10$ykqQ6op9Wk9yU2C3KpyrUu0fJ/.SLg3J4zIjC1w6Gh.V6/9/u3vCy
