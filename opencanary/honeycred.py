@@ -7,7 +7,7 @@ def buildHoneyCredHook(creds):
     """
     Return a callable object that can be used as a honeycred_hook in
     OpenCanary's configuration file.
-
+    
     The callable object will check if a given username and password match
     any of the credentials specified in `creds`.
 
@@ -17,16 +17,12 @@ def buildHoneyCredHook(creds):
     Returns:
         Callable: A function that takes a username and password as arguments
             and returns True if they match any of the credentials in `creds`.
-
     """
     return functools.partial(testManyCreds, creds)
 
 def testCred(cred, username=None, password=None):
     """
     Test if given credentials match specified credentials.
-
-    If specified credentials do not have a username or password, it
-    will still match on the other.
 
     Args:
         cred (dict): A dictionary representing the credentials to match against.
@@ -38,20 +34,18 @@ def testCred(cred, username=None, password=None):
 
     Returns:
         bool: True if the given username and password match the specified credentials.
-
     """
-    cred_username = cred.get("username", None)
-    cred_password = cred.get("password", None)
+    # Match username if specified
+    if "username" in cred:
+        if cred["username"].encode() != username:
+            return False
 
-    user_match = True
-    if cred_username is not None:
-        user_match = (cred_username.encode() == username)
+    # Match password if specified
+    if "password" in cred:
+        if not cryptcontext.verify(password, cred["password"]):
+            return False
 
-    password_match = True
-    if cred_password is not None:
-        password_match = cryptcontext.verify(password, cred_password)
-
-    return (user_match and password_match)
+    return True
 
 def testManyCreds(creds, username=None, password=None):
     """
@@ -64,9 +58,5 @@ def testManyCreds(creds, username=None, password=None):
 
     Returns:
         bool: True if the given username and password match any of the credentials.
-
     """
-    for c in creds:
-        if testCred(c, username, password):
-            return True
-    return False
+    return any(testCred(cred, username, password) for cred in creds)
